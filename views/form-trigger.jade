@@ -1,5 +1,9 @@
 head
    include head.jade
+   style.
+      .conditional-content{
+         display:none;
+      }
 body
    div.container-fluid
       form(action="#{action}",method="POST")
@@ -7,8 +11,8 @@ body
             div.col-md-8.col-md-offset-2
                div.row
                   div.col-md-12
-                     img.banner(src='/images/informantlogo.png')
-                     a.btn.btn-info.pull-right(href="/trigger/new") Add a new trigger
+                     a(href="/")
+                        img.banner(src='/images/informantlogo.png')
                div.form-group(style='margin-top:1em;')
                   label(for=title) Trigger Title
                   input#title.form-control(placeholder='Short descriptive title for this trigger', name="title",value="#{trigger.title ? trigger.title : ''}")
@@ -16,32 +20,72 @@ body
                   label(for=expression) Trigger Expression
                   input#expression.form-control(placeholder='e.g. $toxicity > 10', name="expression",value="#{trigger.expression ? trigger.expression : ''}")
                label Actions
-               div.checkbox
+               div.checkbox.conditional-checkboxes
                   label
-                     input(type='checkbox',checked='checked')
+                     input(type='checkbox',data-target="#SmsPane")
                      | Send SMS
                   label.disabled &nbsp;&nbsp;
-                     input(type='checkbox',disabled='true')
+                     input(type='checkbox',data-target="#EmailPane")
                      | Send Email
                   label.disabled &nbsp;&nbsp;
-                     input(type='checkbox',disabled='true')
+                     input(type='checkbox',data-target="#CallPane")
                      | Call
-               div.form-group
-                  label(for=receivers) Receivers
-                  textarea#receivers.form-control(
-                        rows="3",
-                        placeholder="09433030359,09309776556",
-                        name="receivers")
-                     | #{trigger.receivers ? trigger.receivers : ''}
-               div.form-group
-                  label(for=content) SMS Content
-                  textarea#content.form-control(
-                        rows="3",
-                        placeholder="The temperature at home is $temperature",
-                        name="content")
-                     | #{trigger.content ? trigger.content : ''}
+               div#SmsPane.conditional-content
+                  div.form-group
+                     h4 SMS Actions
+                  div.form-group
+                     label(for=smsReceivers) SMS Receivers
+                     textarea#smsReceivers.form-control(
+                           rows="3",
+                           placeholder="09433030359,09309776556",
+                           name="smsReceivers")
+                        | #{trigger.smsReceivers ? trigger.smsReceivers : ''}
+                  div.form-group
+                     label(for=smsContent) SMS Content
+                     textarea#smsContent.form-control(
+                           rows="3",
+                           placeholder="Your child's temperature at home is $temperature",
+                           name="smsContent")
+                        | #{trigger.smsContent ? trigger.smsContent : ''}
+
+
+               div#EmailPane.conditional-content
+                  h4 Email Actions
+                  label(for="email-subject") Subject Line
+                  input#email-subject.form-control(placeholder='Subject for email', name="emailSubject",value="#{trigger.emailSubject ? trigger.emailSubject : ''}")
+                  div.form-group
+                     label(for=emailReceivers) Email Receivers
+                     textarea#emailReceivers.form-control(
+                           rows="3",
+                           placeholder="email@gmail.com",
+                           name="emailReceivers")
+                        | #{trigger.emailReceivers ? trigger.emailReceivers : ''}
+                  div.form-group
+                     label(for=emailContent) Email Content
+                     textarea#emailContent.form-control(
+                           rows="3",
+                           placeholder="Your child's temperature at home is $temperature",
+                           name="emailContent")
+                        | #{trigger.emailContent ? trigger.emailContent : ''}
+
+
+
+               div#CallPane.conditional-content
+                  h4 Call Actions
+                  | Sorry this feature isn't available yet!
 
                br
                hr
                div.form-group
                   button.btn.btn-success.pull-right Save Trigger
+   script.
+      $(document).ready( function(){
+         $('.conditional-checkboxes input').change(function(){
+            var $target = $( $(this).attr("data-target") )
+            if( this.checked ){
+               $target.slideDown()
+            } else {
+               $target.slideUp()
+            }
+         })
+      })

@@ -35,7 +35,8 @@ module.exports = function(){
       request = require('request')
       console.warn("YOu sent the ff", params)
       request.post( {url:this.endpoint , form: params}, function(a,b,body){
-         console.log("Sms ",body)
+         // console.log("Sms ",body)
+         console.log("Succesfully triggered SMS ---")
       })
    }
 

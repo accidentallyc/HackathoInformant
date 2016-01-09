@@ -43,6 +43,7 @@ module.exports = {
                      email.content = parseVars( trigger.emailContent )
                      email.addReceiver( trigger.emailReceivers )
                      email.subject = trigger.emailSubject
+                     email.send()
                   }
 
                   status = 'Passed condition. sending.'

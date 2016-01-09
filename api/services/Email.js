@@ -26,9 +26,22 @@ module.exports = function (){
          }
 
       request = require('request')
-      
-      request.get( {url:this.endpoint , form: params}, function(a,b,body){
-         console.log("Response to email",body)
+
+      console.log(params)
+      endpoint =
+         this.endpoint + '?' +
+         "pass="     + params.pass    + '&' +
+         "fremail="  + params.fremail + '&' +
+         "rcemail="  + params.rcemail + '&' +
+         "name="     + params.name    + '&' +
+         "sj="       + params.sj      + '&' +
+         "content="  + params.content + '&' +
+         "user="     + params.user
+
+
+      request.get( {url:endpoint }, function(a,b,body){
+         // console.log("Response to email",body)
+         console.log("Succesfully triggered email ---")
       })
    }
 
