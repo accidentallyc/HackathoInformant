@@ -22,13 +22,13 @@ body
                label Actions
                div.checkbox.conditional-checkboxes
                   label
-                     input(type='checkbox',data-target="#SmsPane")
+                     input#doSms(type='checkbox',data-target="#SmsPane",name="doSms", value="1")
                      | Send SMS
                   label.disabled &nbsp;&nbsp;
-                     input(type='checkbox',data-target="#EmailPane")
+                     input#doEmail(type='checkbox',data-target="#EmailPane",name="doEmail", value="1")
                      | Send Email
                   label.disabled &nbsp;&nbsp;
-                     input(type='checkbox',data-target="#CallPane")
+                     input#doCall(type='checkbox',data-target="#CallPane", name="doCall", value="1")
                      | Call
                div#SmsPane.conditional-content
                   div.form-group
@@ -89,3 +89,22 @@ body
             }
          })
       })
+
+   if trigger.doSms == 1
+      script.
+         $(document).ready( function(){
+         $('#doSms').click()
+         })
+
+   if trigger.doEmail == 1
+      script.
+         $(document).ready( function(){
+         $('#doEmail').click()
+         })
+
+
+   if trigger.doCall == 1
+      script.
+         $(document).ready( function(){
+         $('#doCall').click()
+         })
