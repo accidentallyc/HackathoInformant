@@ -7,7 +7,7 @@ module.exports = {
             "title"       : req.param('title'),
             "expression"  : req.param('expression'),
             "receivers"   : req.param('receivers')
-         }).exec( function(err,res){
+         }).exec( function(err,trigger){
             console.log(err||res)
             if(err){
                res.view('form-trigger.jade',{err:err})
