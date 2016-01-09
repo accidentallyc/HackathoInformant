@@ -5,32 +5,45 @@ module.exports = {
          .findOne({id:id})
          .then( function(trigger){
             var reqParams = req.params.all()
+            var regex = /\$(\w+)/g
+
+            function parseVars(txt){
+               return txt.replace( regex, function(match, submatch){
+                  replacement = reqParams[ submatch ] || wordbank[ submatch ]
+                  if (replacement)
+                     return replacement
+                  else{
+                     console.error('Cannot find match for ' + submatch + ' in both request variables and in the wordbank')
+                  }
+               })
+            }
+
+
             if (!trigger){
                res.notFound('404: Cannot find trigger with id ' + id )
             }
             else{
-               var regex = /\$(\w+)/g
-               var expression = trigger
-                  .expression
-                  .replace( regex, function(match, submatch){
-                     replacement = reqParams[ submatch ] || wordbank[ submatch ]
-                     if (replacement)
-                        return replacement
-                     else
-                        throw new Error('Cannot find match for ' + submatch + ' in both request variables and in the wordbank')
 
-                  })
+               if( !reqParams.content )
+                  console.error('Missing content field from request variables')
+
+               var expression = parseVars( trigger.expression )
+
 
                var eResult = null
                var status  = null
                if( eResult = eval( expression ) ){
                   msg = new Sms()
-                  msg.content = reqParams.message
+                  msg.content    = parseVars( reqParams.content )
+                  msg.addReceiver( trigger.receivers )
                   msg.send()
-                  
+
+                  console.log(msg)
+
                   status = 'Passed condition. sending.'
                } else{
                   status = 'Failed condition. Not sending.'
+
                }
 
                // Return result
