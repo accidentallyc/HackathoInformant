@@ -22,10 +22,7 @@
 
 module.exports.routes = {
 
-  '/': {
-    view: 'homepage'
-   },
-
+  '/': 'PageController.dashboard',
   '/trigger/:id/trigger' : 'TriggerPointController.trigger',
   '/trigger/new' : 'FormsController.showNewTriggerForm'
 
