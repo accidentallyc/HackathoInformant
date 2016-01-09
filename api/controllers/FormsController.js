@@ -6,7 +6,8 @@ module.exports = {
          Trigger.create({
             "title"       : req.param('title'),
             "expression"  : req.param('expression'),
-            "receivers"   : req.param('receivers')
+            "receivers"   : req.param('receivers'),
+            "content"   : req.param('content')
          }).exec( function(err,trigger){
             console.log(err||res)
             if(err){

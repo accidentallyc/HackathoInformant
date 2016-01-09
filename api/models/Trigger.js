@@ -15,6 +15,9 @@ module.exports = {
       },
       receivers : {
          type: 'string'
+      },
+      content : {
+         type: 'string'
       }
    }
 };
