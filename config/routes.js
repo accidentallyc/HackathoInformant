@@ -24,6 +24,7 @@ module.exports.routes = {
 
   '/': 'PageController.dashboard',
   '/trigger/:id/trigger' : 'TriggerPointController.trigger',
+  '/trigger/:id/edit' : 'FormsController.showEditTriggerForm',
   '/trigger/new' : 'FormsController.showNewTriggerForm'
 
   /***************************************************************************

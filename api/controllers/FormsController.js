@@ -1,6 +1,5 @@
 module.exports = {
    showNewTriggerForm : function(req,res){
-      console.log( "testasd",req.method )
       if( req.method == 'POST')
       {
          Trigger.create({
@@ -8,19 +7,67 @@ module.exports = {
             "expression"  : req.param('expression'),
             "receivers"   : req.param('receivers'),
             "content"   : req.param('content')
-         }).exec( function(err,trigger){
-            console.log(err||res)
-            if(err){
-               res.view('form-trigger.jade',{err:err})
-            }else{
-               res.view('form-trigger.jade',{success:true})
-            }
+         }).then( function(trigger){
+            res.view('form-trigger.jade',{
+               action:'/trigger/new',
+               trigger: {},
+               success:true
+            })
+         })
+         .catch( function(err){
+            console.log(err)
+            res.view('form-trigger.jade',{
+                     action:'/trigger/new',
+                     trigger:{},
+                     err:err})
          })
       }
       else
       {
-         res.view('form-trigger.jade')
+         res.view('form-trigger.jade',{trigger: {}})
       }
    },
+
+   showEditTriggerForm: function(req,res){
+      if( req.method == 'POST')
+      {
+         Trigger
+            .findOne({id:req.params.id})
+            .then( function(trigger){
+                trigger.title       = req.param('title')
+                trigger.expression  = req.param('expression')
+                trigger.receivers   = req.param('receivers')
+                trigger.content     = req.param('content')
+                trigger.save()
+
+                res.view('form-trigger.jade',{
+                   action:'/trigger/'+req.params.id+'/edit',
+                  trigger: trigger,
+                  success:true
+               })
+            }).catch( function(err){
+               console.log(err)
+               res.view('form-trigger.jade',{err:err})
+            })
+      }
+      else
+      {
+         Trigger
+            .findOne({id:req.params.id})
+            .then( function(trigger){
+               console.log("trigger here is",trigger)
+               res.view('form-trigger.jade',{
+                  action:'/trigger/'+req.params.id+'/edit',
+                  trigger: trigger,
+                  success:true
+               })
+            })
+            .catch( function(err){
+               console.log(err)
+               res.view('form-trigger.jade',{err:err})
+            })
+
+      }
+   }
 
 }

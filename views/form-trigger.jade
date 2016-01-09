@@ -2,23 +2,40 @@ head
    include head.jade
 body
    div.container-fluid
-      form(action="/trigger/new",method="POST")
+      form(action="#{action}",method="POST")
          div.row(style='margin-top:2em;')
             div.col-md-8.col-md-offset-2
                div.form-group
                   label(for=title) Trigger Title
-                  input#title.form-control(placeholder='Short descriptive title for this trigger', name="title")
+                  input#title.form-control(placeholder='Short descriptive title for this trigger', name="title",value="#{trigger.title ? trigger.title : ''}")
                div.form-group
                   label(for=expression) Trigger Expression
-                  input#expression.form-control(placeholder='e.g. $toxicity > 10', name="expression")
+                  input#expression.form-control(placeholder='e.g. $toxicity > 10', name="expression",value="#{trigger.expression ? trigger.expression : ''}")
                label Actions
                div.checkbox
                   label
-                     input(type='checkbox')
+                     input(type='checkbox',checked='checked')
                      | Send SMS
+                  label.disabled &nbsp;&nbsp;
+                     input(type='checkbox',disabled='true')
+                     | Send Email
+                  label.disabled &nbsp;&nbsp;
+                     input(type='checkbox',disabled='true')
+                     | Call
                div.form-group
-                  label(for=expression) Receivers
-                  textarea.form-control(rows="3",placeholder="09433030359,09309776556",name="receivers")
+                  label(for=receivers) Receivers
+                  textarea#receivers.form-control(
+                        rows="3",
+                        placeholder="09433030359,09309776556",
+                        name="receivers")
+                     | #{trigger.receivers ? trigger.receivers : ''}
+               div.form-group
+                  label(for=content) SMS Content
+                  textarea#content.form-control(
+                        rows="3",
+                        placeholder="The temperature at home is $temperature",
+                        name="content")
+                     | #{trigger.content ? trigger.content : ''}
 
                br
                hr
