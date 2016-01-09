@@ -5,7 +5,11 @@ body
       form(action="#{action}",method="POST")
          div.row(style='margin-top:2em;')
             div.col-md-8.col-md-offset-2
-               div.form-group
+               div.row
+                  div.col-md-12
+                     img.banner(src='/images/informantlogo.png')
+                     a.btn.btn-info.pull-right(href="/trigger/new") Add a new trigger
+               div.form-group(style='margin-top:1em;')
                   label(for=title) Trigger Title
                   input#title.form-control(placeholder='Short descriptive title for this trigger', name="title",value="#{trigger.title ? trigger.title : ''}")
                div.form-group
