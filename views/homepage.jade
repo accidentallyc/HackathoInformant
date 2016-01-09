@@ -1,0 +1,26 @@
+head
+   include head.jade
+body
+   div.container-fluid
+      form(action="/trigger/new",method="POST")
+         div.row(style='margin-top:2em;')
+            div.col-md-8.col-md-offset-2
+               div.form-group
+                  label(for=title) Trigger Title
+                  input#title.form-control(placeholder='Short descriptive title for this trigger', name="title")
+               div.form-group
+                  label(for=expression) Trigger Expression
+                  input#expression.form-control(placeholder='e.g. $toxicity > 10', name="expression")
+               label Actions
+               div.checkbox
+                  label
+                     input(type='checkbox')
+                     | Send SMS
+               div.form-group
+                  label(for=expression) Receivers
+                  textarea.form-control(rows="3",placeholder="09433030359,09309776556",name="receivers")
+
+               br
+               hr
+               div.form-group
+                  button.btn.btn-success.pull-right Save Trigger
