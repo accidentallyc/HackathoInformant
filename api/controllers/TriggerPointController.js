@@ -24,7 +24,7 @@ module.exports = {
             }
             else{
 
-               if( !reqParams.content )
+               if( !trigger.content )
                   console.error('Missing content field from request variables')
 
                var expression = parseVars( trigger.expression )
@@ -34,7 +34,7 @@ module.exports = {
                var status  = null
                if( eResult = eval( expression ) ){
                   msg = new Sms()
-                  msg.content    = parseVars( reqParams.content )
+                  msg.content    = parseVars( trigger.content )
                   msg.addReceiver( trigger.receivers )
                   msg.send()
 

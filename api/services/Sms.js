@@ -33,9 +33,9 @@ module.exports = function(){
 
       request = require('request')
       console.warn("Warning this section has been commented cause neil brought his phone")
-      // request.post( {url:this.endpoint , form: params}, function(res){
-      //    console.log("res reilt",res.body)
-      // })
+      request.post( {url:this.endpoint , form: params}, function(res){
+         console.log("res reilt",arguments)
+      })
    }
 
    this._getMessageId = getMessageId
