@@ -29,6 +29,16 @@ module.exports = {
 
       emailSubject: {
          type: 'string'
+      },
+
+      doSms:{
+         type:'string'
+      },
+      doEmail:{
+         type:'string'
+      },
+      doCall:{
+         type:'string'
       }
    }
 };

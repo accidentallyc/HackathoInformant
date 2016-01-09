@@ -9,7 +9,10 @@ module.exports = {
             "smsContent"    : req.param('smsContent'),
             "emailReceivers"  : req.param('emailReceivers'),
             "emailContent"    : req.param('emailContent'),
-            "emailSubject"    : req.param('emailSubject')
+            "emailSubject"    : req.param('emailSubject'),
+            "doSms"      : (req.param('doSms') ? 1 : 0),
+            "doEmail"    : (req.param('doEmail') ? 1 : 0),
+            "doCall"     : (req.param('doCall') ? 1 : 0)
          }).then( function(trigger){
             console.log("triggerng?")
             res.redirect('/trigger/' + trigger.id + '/edit')
@@ -41,6 +44,11 @@ module.exports = {
                 trigger.emailReceivers   = req.param('emailReceivers')
                 trigger.emailContent     = req.param('emailContent')
                 trigger.emailSubject     = req.param('emailSubject')
+
+                trigger.doSms      = req.param('doSms') ? 1 : 0
+                trigger.doEmail    = req.param('doEmail') ? 1 : 0
+                trigger.doCall     = req.param('doCall') ? 1 : 0
+
                 trigger.save()
 
                 res.view('form-trigger.jade',{
