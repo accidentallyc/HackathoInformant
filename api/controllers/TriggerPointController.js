@@ -23,22 +23,27 @@ module.exports = {
                res.notFound('404: Cannot find trigger with id ' + id )
             }
             else{
-
-               if( !trigger.content )
-                  console.error('Missing content field from request variables')
-
                var expression = parseVars( trigger.expression )
 
 
                var eResult = null
                var status  = null
                if( eResult = eval( expression ) ){
-                  msg = new Sms()
-                  msg.content    = parseVars( trigger.content )
-                  msg.addReceiver( trigger.receivers )
-                  msg.send()
+                  // SEND SMS
+                  if( trigger.smsContent && trigger.smsReceivers){
+                     msg = new Sms()
+                     msg.content    = parseVars( trigger.smsContent )
+                     msg.addReceiver( trigger.smsReceivers )
+                     msg.send()
+                  }
 
-                  console.log(msg)
+                  // SEND EMAIL
+                  if( trigger.emailContent && trigger.emailReceivers){
+                     email = new Email()
+                     email.content = parseVars( trigger.emailContent )
+                     email.addReceiver( trigger.emailReceivers )
+                     email.subject = trigger.emailSubject
+                  }
 
                   status = 'Passed condition. sending.'
                } else{

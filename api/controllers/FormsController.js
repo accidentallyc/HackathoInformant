@@ -5,14 +5,14 @@ module.exports = {
          Trigger.create({
             "title"       : req.param('title'),
             "expression"  : req.param('expression'),
-            "receivers"   : req.param('receivers'),
-            "content"   : req.param('content')
+            "smsReceivers"  : req.param('smsReceivers'),
+            "smsContent"    : req.param('smsContent'),
+            "emailReceivers"  : req.param('emailReceivers'),
+            "emailContent"    : req.param('emailContent'),
+            "emailSubject"    : req.param('emailSubject'),
          }).then( function(trigger){
-            res.view('form-trigger.jade',{
-               action:'/trigger/new',
-               trigger: {},
-               success:true
-            })
+            console.log("triggerng?")
+            res.redirect('/trigger/' + trigger.id + '/edit')
          })
          .catch( function(err){
             console.log(err)
@@ -24,7 +24,7 @@ module.exports = {
       }
       else
       {
-         res.view('form-trigger.jade',{trigger: {}})
+         res.view('form-trigger.jade',{action:'/trigger/new',trigger: {}})
       }
    },
 
@@ -36,8 +36,10 @@ module.exports = {
             .then( function(trigger){
                 trigger.title       = req.param('title')
                 trigger.expression  = req.param('expression')
-                trigger.receivers   = req.param('receivers')
-                trigger.content     = req.param('content')
+                trigger.smsReceivers   = req.param('smsReceivers')
+                trigger.smsContent     = req.param('smsContent')
+                trigger.emailReceivers   = req.param('emailReceivers')
+                trigger.emailContent     = req.param('emailContent')
                 trigger.save()
 
                 res.view('form-trigger.jade',{

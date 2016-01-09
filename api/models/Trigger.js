@@ -13,10 +13,21 @@ module.exports = {
       expression: {
          type: 'string'
       },
-      receivers : {
+      smsReceivers : {
          type: 'string'
       },
-      content : {
+      smsContent : {
+         type: 'string'
+      },
+      emailReceivers :{
+         type: 'string'
+      },
+
+      emailContent : {
+         type: 'string'
+      },
+
+      emailSubject: {
          type: 'string'
       }
    }

@@ -4,7 +4,8 @@ module.exports = function(){
    this.secretKey = "1d404bd8edf2968a7928c20767a085d79012c8e780f82f6f5e745cb2e5c7c0fa"
 
    function getMessageId( ) {
-      return "ccc81279fcc048d1a6fcc52ed4c13255"
+      // return "ccc81279fcc048d1a6fcc52ed4c13255"
+      return (new Date).getTime().toString()
    }
 
 
@@ -32,9 +33,9 @@ module.exports = function(){
          }
 
       request = require('request')
-      console.warn("Warning this section has been commented cause neil brought his phone")
-      request.post( {url:this.endpoint , form: params}, function(res){
-         console.log("res reilt",arguments)
+      console.warn("YOu sent the ff", params)
+      request.post( {url:this.endpoint , form: params}, function(a,b,body){
+         console.log("Sms ",body)
       })
    }
 
